@@ -1,3 +1,8 @@
+/**
+ * Randomize Selection Color
+ * https://github.com/Inventsable/Randomize-Selection-Color
+ */
+
 var options = {
   /**
    * Maximum delta difference from current color. Smaller = less change, larger = more change
@@ -7,6 +12,7 @@ var options = {
   threshold: 10, // You can change this number
 };
 
+// Utils and polyfills to make scripting in Adobe remotely bearable
 RGBColor.prototype.create = function (red, green, blue) {
   this.red = red;
   this.green = green;
@@ -59,6 +65,7 @@ function get(type, parent, deep) {
   return result || [];
 }
 
+// Main
 function randomizeColorsInSelection() {
   try {
     if (!app.selection.length) {
@@ -92,5 +99,4 @@ function randomizeColorsInSelection() {
     alert(err);
   }
 }
-
 randomizeColorsInSelection();
