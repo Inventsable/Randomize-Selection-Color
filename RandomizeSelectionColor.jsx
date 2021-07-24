@@ -10,6 +10,7 @@ var options = {
    *   - Should probably never be above 100
    */
   threshold: 10, // You can change this number
+  lightnessOnly: true, // If true roll same for all channels, else false roll individually for all channels.
 };
 
 // Utils and polyfills to make scripting in Adobe remotely bearable
@@ -78,11 +79,16 @@ function randomizeColorsInSelection() {
       })
       .forEach(function (item) {
         if (/rgb/i.test("" + item.fillColor)) {
-          var newChannels = [];
+          var newChannels = [],
+            deltaShift = options.lightnessOnly
+              ? randomNumber(options.threshold || 10) *
+                (Math.round(Math.random()) ? -1 : 1)
+              : null;
           item.fillColor.getArray().forEach(function (channel) {
-            var deltaShift =
-              randomNumber(options.threshold || 10) *
-              (Math.round(Math.random()) ? -1 : 1);
+            deltaShift = options.lightnessOnly
+              ? deltaShift
+              : randomNumber(options.threshold || 10) *
+                (Math.round(Math.random()) ? -1 : 1);
             newChannels.push(channel + deltaShift);
           });
           newChannels = newChannels.map(function (channel) {
